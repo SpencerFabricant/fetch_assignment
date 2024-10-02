@@ -56,13 +56,17 @@ def process_receipt():
         receipt_id = str(uuid.uuid4())
         receipts[receipt_id] = points
     except:
-        return Response("no", status=400)
-    return Response(receipt_id, status=200)
+        return Response("Receipt is Invalid", status=400)
+
+    return_json = json.dumps({"id": receipt_id})
+    return Response(return_json, status=200)
 
 @app.route('/receipts')
 @app.route('/receipts/<receipt_id>/points')
 def uuid_to_score(receipt_id):
-    print(receipt_id)
-    return f"{receipts[receipt_id]}"
+    if receipt_id not in receipts:
+        return Response("Invalid receipt id", status=404)
+    return_json = json.dumps({"score":receipts[receipt_id]})
+    return Response(return_json, status=200)
 
 
