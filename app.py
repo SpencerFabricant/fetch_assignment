@@ -11,11 +11,9 @@ app = Flask(__name__)
 
 def score_receipt(receipt):
     score = 0
-    print(receipt)
     for i in receipt['retailer']:
         if i.isalpha():
             score += 1
-    print(score)
 
     cents = int(receipt['total'].split('.')[1])
     if cents == 0:
@@ -23,24 +21,19 @@ def score_receipt(receipt):
 
     if cents %25 == 0:
         score += 25
-    print(score)
 
     score += 5 * (len(receipt['items'])//2)
-    print(score)
 
     for item in receipt['items']:
         if len(item['shortDescription'].strip()) % 3 == 0:
             score += int(math.ceil(float(item['price']) * 0.2))
-    print(score)
 
     if int(receipt['purchaseDate'].split('-')[2]) % 2 == 1:
         score += 6
-    print(score)
 
     purchase_hour = int(receipt['purchaseTime'].split(':')[0])
     if purchase_hour in [14, 15]:
         score += 10
-    print(score)
 
     return score
 

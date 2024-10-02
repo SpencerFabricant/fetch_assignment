@@ -1,1 +1,1 @@
-flask
+flask-marshmallow==1.2.1
