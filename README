@@ -1,0 +1,5 @@
+To build, run the following command from this directory:
+    docker build --tag myfetch .
+
+It will by default run on port 5000.  To run the docker container, run
+     docker run -p 5000:5000 myfetch
